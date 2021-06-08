@@ -2,49 +2,53 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardTitle } from 'reactstrap';
 import { format } from 'date-fns';
 
-class DishDetail extends Component{
 
-    constructor(props) {
-        super(props);
-    }
+function RenderDish({ dish }) {
+    return (
+         <div className="col-12 col-md-5 m-1">
+            <Card>
+                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardTitle className="ml-3 mt-2">{dish.name}</CardTitle>
+                <CardText className="ml-3">{dish.description}</CardText>
+            </Card>
+        </div>
+    );
+}
 
-    render() {
+function RenderComments({ comments }) {
+    const comment = comments.map((cmt) => {
+        return (
+            <div key={cmt.id}>
+                <div className="col-12 col-md-12 mb-3">{cmt.comment}</div>
+                <div className="col-12 col-md-12 mb-3">-- {cmt.author} , {format(new Date(cmt.date), 'MMM dd, yyyy')}</div>
+            </div>
+        );
+    });
+    return (
+        <div className="m-1 col-12 col-md-5">
+            <h4>Comments</h4>
+            {comment}
+        </div>
+    );
+}
 
-        if (this.props.dish == null) {
+const DishDetail = (props) => {
+    
+        if (props.dish == null) {
             return (
                 <div></div>
             );
         }
 
-
-        console.log("Inside Dish Detail Componnet");
-
-        const comments = this.props.dish.comments.map((cmt) => {
-            return (
-                <div key={cmt.id}>
-                    <div className="col-12 col-md-12 mb-3">{cmt.comment}</div>
-                    <div className="col-12 col-md-12 mb-3">-- {cmt.author} , {format(new Date(cmt.date), 'MMM dd, yyyy')}</div>
-                </div>
-            );
-        })
+        
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        <Card>
-                            <CardImg width="100%" src={this.props.dish.image} alt={this.props.dish.name} />
-                            <CardTitle className="ml-3 mt-2">{this.props.dish.name}</CardTitle>
-                            <CardText className="ml-3">{this.props.dish.description}</CardText>
-                        </Card>
-                    </div>
-                    <div className="m-1 col-12 col-md-5">
-                        <h4>Comments</h4>
-                        {comments}
-                    </div>
+                    <RenderDish dish={props.dish} />
+                    <RenderComments comments={props.dish.comments} />
                 </div>
             </div>
         );
-    }
 
 
 }
