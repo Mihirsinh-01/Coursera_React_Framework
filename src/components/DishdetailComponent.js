@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardTitle } from 'reactstrap';
 import { format } from 'date-fns';
 
-class Dish extends Component{
+class DishDetail extends Component{
 
     constructor(props) {
         super(props);
     }
 
     render() {
+
+        if (this.props.dish == null) {
+            return (
+                <div></div>
+            );
+        }
 
 
         console.log("Inside Dish Detail Componnet");
@@ -43,4 +49,4 @@ class Dish extends Component{
 
 }
 
-export default Dish;
+export default DishDetail;
